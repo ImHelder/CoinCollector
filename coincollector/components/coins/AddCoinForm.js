@@ -5,6 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { addCoin, getData, saveData } from '@/db/database';
 import CoinForm from './CoinForm';
+import { useIsFocused } from '@react-navigation/native';
 
 const AddCoinForm = () => {
   const [coin, setCoin] = useState({
@@ -17,6 +18,7 @@ const AddCoinForm = () => {
   });
   const [coins, setCoins] = useState([]); 
   const [selectedCoin, setSelectedCoin] = useState(null);
+  const isFocused = useIsFocused();
 
   const handleChange = (name, value) => {
     setCoin({ ...coin, [name]: value });
@@ -116,10 +118,11 @@ const AddCoinForm = () => {
 
   useEffect(() => {
     (async () => {
+        if(!isFocused) return;
         const coins = await getData('coins');
         setCoins(coins || []);
     })();
-  }, []);
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>

@@ -14,7 +14,7 @@ const CoinForm = ({ coin, handleChange }) => {
         <View>
             <TextInput
                 style={styles.input}
-                placeholder="Year"
+                placeholder="Année"
                 value={coin.year}
                 onChangeText={(value) => handleChange('year', value)}
             />
@@ -34,14 +34,14 @@ const CoinForm = ({ coin, handleChange }) => {
             </View>
             <TextInput
                 style={styles.input}
-                placeholder="Quantity"
+                placeholder="Quantité"
                 value={coin.quantity}
                 onChangeText={(value) => handleChange('quantity', value)}
                 keyboardType="numeric"
             />
             <TextInput
                 style={styles.input}
-                placeholder="Value"
+                placeholder="Valeur en €"
                 value={coin.value}
                 onChangeText={(value) => handleChange('value', value)}
                 keyboardType="numeric"

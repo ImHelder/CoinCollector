@@ -16,10 +16,12 @@ const CoinsList = ({ coins, onRefresh, loading, initializeDB, resetDB }) => {
           width={100}
           height={100}
           data={item.images}
-          scrollAnimationDuration={50}
+          scrollAnimationDuration={1000}
           renderItem={({ item }) => (
             <Image source={{ uri: item }} style={styles.coinImage} />
           )}
+          loop
+          autoPlay={item.images.length > 1}
         />   
         <View style={styles.coinDetails}>
           <Text style={styles.coinYear}>{item.year}</Text>
