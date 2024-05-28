@@ -1,29 +1,55 @@
 import React from 'react';
-import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, RefreshControl, TouchableOpacity } from 'react-native';
+import Carousel from 'react-native-reanimated-carousel';
 
-const CoinsList = ({ coins, refreshControl }) => {
+const CoinsList = ({ coins, onRefresh, loading, initializeDB, resetDB }) => {
+  const rarityOptions = [
+    { label: 'Commune', value: 'common' },
+    { label: 'Rare', value: 'rare' },
+    { label: 'Très Rare', value: 'extremely-rare' },
+    { label: 'Unique', value: 'unique' },
+  ];
+
   const renderCoinItem = ({ item }) => (
-    <View style={styles.coinItem}>
-      <Image source={{ uri: item.image }} style={styles.coinImage} />
-      <View style={styles.coinDetails}>
-        <Text style={styles.coinYear}>{item.year}</Text>
-        <Text style={styles.coinRarity}>{item.rarity}</Text>
-        <Text style={styles.coinQuantity}>Quantité : {item.quantity}</Text>
-        <Text style={styles.coinValue}>Valeur : {item.value} €</Text>
-        <Text style={styles.coinDescription}>{item.description}</Text>
-        <Text style={styles.coinAddedAt}>Ajoutée le : {new Date(item.addedAt).toLocaleDateString()}</Text>
-      </View>
+    <View style={styles.coinItem} key={item.id}>
+        <Carousel
+          width={100}
+          height={100}
+          data={item.images}
+          scrollAnimationDuration={50}
+          renderItem={({ item }) => (
+            <Image source={{ uri: item }} style={styles.coinImage} />
+          )}
+        />   
+        <View style={styles.coinDetails}>
+          <Text style={styles.coinYear}>{item.year}</Text>
+          <Text style={styles.coinRarity}>{rarityOptions.find((rare) => item.rarity === rare.value)?.label || item.rarity}</Text>
+          <Text style={styles.coinQuantity}>Quantité : {item.quantity}</Text>
+          <Text style={styles.coinValue}>Valeur : {item.value} €</Text>
+          <Text style={styles.coinDescription}>{item.description}</Text>
+          <Text style={styles.coinAddedAt}>Ajoutée le : {new Date(item.addedAt)?.toLocaleDateString("fr")}</Text>
+        </View>
     </View>
   );
 
   return (
-    <FlatList
-      data={coins}
-      renderItem={renderCoinItem}
-      keyExtractor={(item) => item.id?.toString()}
-      contentContainerStyle={styles.coinsList}
-      refreshControl={refreshControl}
-    />
+    <View style={styles.container}>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => initializeDB()}>
+          <Text style={styles.buttonText}>Initialize DB</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.resetButton]} onPress={() => resetDB()}>
+          <Text style={styles.buttonText}>Reset DB</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={coins}
+        renderItem={renderCoinItem}
+        keyExtractor={(item) => item.id?.toString()}
+        contentContainerStyle={styles.coinsList}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={onRefresh} />}
+      />
+    </View>
   );
 };
 
@@ -55,7 +81,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
   coinDetails: {
-    flex: 1,
+    flex: 2,
   },
   coinYear: {
     fontSize: 18,
@@ -82,6 +108,30 @@ const styles = StyleSheet.create({
   coinAddedAt: {
     fontSize: 12,
     color: 'gray',
+  },
+  container: {
+    marginVertical: 20,
+    marginBottom: 100,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#4a90e2',
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginHorizontal: 10,
+  },
+  resetButton: {
+    backgroundColor: '#e74c3c',
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

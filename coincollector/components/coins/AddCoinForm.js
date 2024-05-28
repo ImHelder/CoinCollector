@@ -32,9 +32,9 @@ const AddCoinForm = () => {
     if (selectedCoin) {
         const updatedCoins = coins.map((c) => {
           if (c.id === selectedCoin.id) {
-            return { ...coin, quantity: parseInt(c.quantity) + 1, image: coin.image || c.image};
+            return { ...c, quantity: parseInt(c.quantity) + 1, images: coin.image ? [...c.images, coin.image] : c.images };
           }
-          return coin;
+          return c;
         });
         await saveData('coins', updatedCoins);
         setCoins(updatedCoins);
@@ -73,6 +73,7 @@ const AddCoinForm = () => {
       ...coin,
       quantity: parseInt(coin.quantity),
       value: parseFloat(coin.value),
+      images: coin.image ? [coin.image] : [],
       addedAt: new Date(),
     };
     await addCoin(newCoin);
