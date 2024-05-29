@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, RefreshControl, TouchableOpacity } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 
 const CoinsList = ({ coins, onRefresh, loading, initializeDB, resetDB }) => {
+  const [sortConfig, setSortConfig] = useState({ key: 'year', order: 'asc' });
+
   const rarityOptions = [
     { label: 'Commune', value: 'common' },
     { label: 'Rare', value: 'rare' },
@@ -34,18 +36,40 @@ const CoinsList = ({ coins, onRefresh, loading, initializeDB, resetDB }) => {
     </View>
   );
 
+  const sortedCoins = coins.sort((a, b) => (sortConfig.order === 'asc' ? a[sortConfig.key] - b[sortConfig.key] : b[sortConfig.key] - a[sortConfig.key]));
+
+  const toggleSort = (key) => {
+    setSortConfig((prevConfig) => ({
+      key,
+      order: prevConfig.key === key ? (prevConfig.order === 'asc' ? 'desc' : 'asc') : 'asc',
+    }));
+  };
+
   return (
     <View style={styles.container}>
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => initializeDB()}>
           <Text style={styles.buttonText}>Initialize DB</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={[styles.button, styles.resetButton]} onPress={() => resetDB()}>
           <Text style={styles.buttonText}>Reset DB</Text>
         </TouchableOpacity>
       </View>
+
+      <View style={styles.sortContainer}>
+        {['year', 'quantity', 'value'].map((key) => (
+          <TouchableOpacity key={key} style={styles.sortButton} onPress={() => toggleSort(key)}>
+            <Text style={styles.sortButtonText}>
+              {key.charAt(0).toUpperCase() + key.slice(1)} {sortConfig.key === key && (sortConfig.order === 'asc' ? '▲' : '▼')}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       <FlatList
-        data={coins}
+        data={sortedCoins}
         renderItem={renderCoinItem}
         keyExtractor={(item) => item.id?.toString()}
         contentContainerStyle={styles.coinsList}
@@ -134,6 +158,20 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  sortContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 10,
+  },
+  sortButton: {
+    backgroundColor: '#f0f0f0',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
+  },
+  sortButtonText: {
+    fontSize: 14,
   },
 });
 
