@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity, Image, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet, Text, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
-import { addCoin, getData, saveData } from '@/db/database';
+import { addCoin, getData, saveData } from '../../db/database';
 import CoinForm from './CoinForm';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -25,13 +25,20 @@ const AddCoinForm = () => {
   };
 
   const handleSelectCoin = (coinId) => {
-    const coin = coins.find((c) => c.id === coinId);
-    setSelectedCoin(coin);
+    const c = coins.find((c) => c.id === coinId);
+    setSelectedCoin(c);
+    if (c) setCoin({ ...coin, quantity: c.quantity?.toString() });
+    else setCoin({ ...coin, quantity: '', image: null });
   };
 
   const handleAddCoin = async () => {
-
     if (selectedCoin) {
+
+        if (isNaN(parseInt(coin.quantity))) {
+          alert('La quantité doit être un nombre.');
+          return false;
+        }
+  
         const updatedCoins = coins.map((c) => {
           if (c.id === selectedCoin.id) {
             return { ...c, quantity: parseInt(c.quantity) + 1, images: coin.image ? [...c.images, coin.image] : c.images };
@@ -140,6 +147,16 @@ const AddCoinForm = () => {
             ))}
         </Picker>
 
+       {selectedCoin && 
+          <TextInput
+            style={styles.input}
+            placeholder="Quantité"
+            value={coin.quantity}
+            onChangeText={(value) => handleChange('quantity', value)}
+            keyboardType="numeric"
+          />
+        }
+
         {!selectedCoin && <CoinForm coin={coin} handleChange={handleChange} />}
         
         <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
@@ -202,6 +219,15 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+  },
+  input: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    backgroundColor: '#ffffff',
   },
 });
 

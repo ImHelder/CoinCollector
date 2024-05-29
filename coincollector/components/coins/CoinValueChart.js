@@ -7,9 +7,7 @@ const CoinValueChart = ({ coins }) => {
 
   const coinsData = sortedCoins.reduce((acc, coin) => {
     const date = new Date(coin.addedAt);
-    const month = date.getMonth();
-    const year = date.getFullYear();
-    const dateKey = `${month}-${year}`;
+    const dateKey = date.toISOString().split('T')[0];
 
     const existingEntry = acc.find(entry => entry.dateKey === dateKey);
 
@@ -31,7 +29,7 @@ const CoinValueChart = ({ coins }) => {
   const chartData = {
     labels: coinsData.map(entry => {
       const date = new Date(entry.date);
-      return `${date.getMonth() + 1}/${date.getFullYear().toString().slice(-2)}`;
+      return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(-2)}`;
     }),
     datasets: [
       {
@@ -43,13 +41,15 @@ const CoinValueChart = ({ coins }) => {
   console.log("chartData", chartData);
 
   return (
-    <SafeAreaView style={{flex: 1, marginTop: 30}}>
-      <Text style={{fontSize: 18, fontWeight: "bold", alignSelf: "center", marginBottom: 30}}>Valeur de votre collection</Text>
-       <ScrollView horizontal>
+    <SafeAreaView style={{ flex: 1, marginTop: 30 }}>
+      <Text style={{ fontSize: 18, fontWeight: "bold", alignSelf: "center", marginBottom: 30 }}>
+        Valeur de votre collection
+      </Text>
+      <ScrollView horizontal>
         <View>
           <LineChart
             data={chartData}
-            width={Dimensions.get("window").width * 1.6}
+            width={Dimensions.get("window").width * 2.5}
             height={420}
             yAxisSuffix="€"
             yAxisInterval={1}

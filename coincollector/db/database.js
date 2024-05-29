@@ -19,8 +19,8 @@ export const getData = async (key) => {
 
 export const addCoin = async (coin) => {
   const coins = await getData('coins');
-  if (coins) {
-    await saveData('coins', [...coins, ...coin]);
+  if (coins?.length > 0) {
+    await saveData('coins', [...coins, coin]);
   } else {
     await saveData('coins', [coin]);
   }
