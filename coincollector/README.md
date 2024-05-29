@@ -1,50 +1,94 @@
-# Welcome to your Expo app 👋
+# CoinCollector
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+CoinCollector est une application mobile développée avec React Native qui permet aux utilisateurs de gérer et de suivre leur collection de pièces. L'application offre des fonctionnalités telles que l'ajout de nouvelles pièces, l'affichage de la liste des pièces, la visualisation de l'évolution de la valeur totale des pièces au fil du temps, ainsi que la possibilité d'initialiser et de réinitialiser la base de données.
 
-## Get started
+## Fonctionnalités
 
-1. Install dependencies
+- Ajout de nouvelles pièces avec des détails tels que l'année, la rareté, la quantité, la valeur, la description et une photo.
+- Affichage de la liste des pièces avec leurs détails complets.
+- Visualisation de l'évolution de la valeur totale des pièces au fil du temps grâce à un graphique interactif.
+- Initialisation et réinitialisation de la base de données.
+- Navigation par onglets pour un accès facile aux différentes fonctionnalités.
 
-   ```bash
-   npm install
-   ```
+## Captures d'écran
 
-2. Start the app
+[Insérez ici des captures d'écran de votre application]
 
-   ```bash
-    npx expo start
-   ```
+## Prérequis
 
-In the output, you'll find options to open the app in a
+Avant de pouvoir exécuter l'application CoinCollector localement, assurez-vous d'avoir les éléments suivants installés sur votre machine :
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Node.js (version 12 ou supérieure)
+- npm (généralement installé avec Node.js)
+- Expo CLI (vous pouvez l'installer en exécutant `npm install -g expo-cli`)
+- Un émulateur Android ou iOS, ou un appareil physique pour exécuter l'application
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Installation
 
-## Get a fresh project
+1. Clonez ce dépôt sur votre machine locale :
 
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+git clone https://github.com/votre-nom-utilisateur/CoinCollector.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Accédez au répertoire du projet :
 
-## Learn more
+```
+cd CoinCollector
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+3. Installez les dépendances du projet :
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```
+npm install
+```
 
-## Join the community
+4. Lancez l'application avec Expo :
 
-Join our community of developers creating universal apps.
+```
+expo start
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+5. Utilisez l'application Expo Go sur votre appareil physique ou l'émulateur pour scanner le code QR et exécuter l'application.
+
+## Technologies utilisées
+
+- React Native
+- Expo
+- react-native-chart-kit
+- @react-native-picker/picker
+- expo-image-picker
+- react-native-safe-area-context
+- react-native-screens
+
+## Structure du projet
+
+- `src/components/`: Contient les composants réutilisables de l'application.
+- `src/screens/`: Contient les écrans principaux de l'application.
+- `src/navigation/`: Contient la configuration de la navigation.
+- `src/utils/`: Contient les fonctions utilitaires et les constantes.
+- `src/data/`: Contient les données de l'application (par exemple, les pièces).
+
+## Contribuer
+
+Les contributions sont les bienvenues ! Si vous souhaitez contribuer à CoinCollector, veuillez suivre les étapes suivantes :
+
+1. Fork ce dépôt.
+2. Créez une nouvelle branche avec un nom descriptif : `git checkout -b ma-nouvelle-fonctionnalite`.
+3. Effectuez vos modifications et commitez-les : `git commit -m 'Ajouter une nouvelle fonctionnalité'`.
+4. Poussez vos modifications vers votre fork : `git push origin ma-nouvelle-fonctionnalite`.
+5. Ouvrez une pull request dans ce dépôt.
+
+## Licence
+
+[Insérez ici la licence de votre projet]
+
+## Contact
+
+Si vous avez des questions, des suggestions ou des commentaires, n'hésitez pas à me contacter :
+
+- Nom : [Votre nom]
+- Email : [Votre adresse e-mail]
+- GitHub : [Votre nom d'utilisateur GitHub]
+
+N'hésitez pas à personnaliser ce README en fonction des spécificités de votre projet, à ajouter des sections supplémentaires si nécessaire et à inclure des captures d'écran pour illustrer votre application.
