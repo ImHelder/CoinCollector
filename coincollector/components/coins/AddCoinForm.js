@@ -41,7 +41,7 @@ const AddCoinForm = () => {
   
         const updatedCoins = coins.map((c) => {
           if (c.id === selectedCoin.id) {
-            return { ...c, quantity: parseInt(c.quantity) + 1, images: coin.image ? [...c.images, coin.image] : c.images };
+            return { ...c, quantity: parseInt(coin.quantity), images: coin.image ? [...c.images, coin.image] : c.images };
           }
           return c;
         });
